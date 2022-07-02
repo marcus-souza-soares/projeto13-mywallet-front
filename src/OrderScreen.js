@@ -1,17 +1,27 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import ReleasesContext from "./contexts/OrderContext";
 
 
 import Header from "./components/Header"
 
 
 export default function ReleasesScreen(){
-    const [release, setRelease] = useState("Entrada");
+
+    const saveRelease = (e) => {
+        e.preventDefault();
+        navigate("/wallet")
+    }
+    
+    const { release } = useContext(ReleasesContext);
+    const navigate = useNavigate();
+    const { type } = release;
 
     return(
         <Container>
-            <Header txt={`Nova ${release}`}/>
-            <form >
+            <Header txt={`Nova ${type}`}/>
+            <form onClick={saveRelease}>
                 <input type="number" 
                 placeholder="Valor"
                 required/>
@@ -19,7 +29,7 @@ export default function ReleasesScreen(){
                 placeholder="Descrição"
                 required />
 
-                <button type="submit">{`Salvar ${release}`}</button>
+                <button type="submit">{`Salvar ${type}`}</button>
 
             </form>
         </Container>
@@ -62,5 +72,6 @@ const Container = styled.div`
         font-size: 20px;
         color: #FFFFFF;
     }
+    
    
 `

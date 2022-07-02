@@ -53,7 +53,7 @@ export default function SigIn() {
                         required />
                     <button type="submit" disabled={desativado}>{loading ? <Loading></Loading> : 'Entrar'}</button>
                 </form>
-                <Link to={"/sign-up"}>
+                <Link to={"/sign-up"} style={{textDecoration: 'none'}}>
                     <h3>Primeira vez? Cadastre-se!</h3>
                 </Link>
             </Container>
@@ -68,6 +68,10 @@ const Container = styled.div`
     width: 100%;
     padding: 0 10px;
     margin-top: 25vh;
+    
+    header{
+        margin-bottom: 20px;
+    }
     
     h1{
         font-family: 'Saira Stencil One', cursive;

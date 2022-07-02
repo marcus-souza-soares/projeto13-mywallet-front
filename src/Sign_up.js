@@ -75,7 +75,7 @@ export default function SignUp() {
                         required />
                     <button type="submit" disabled={desativado}>{loading ? <Loading></Loading> : 'Cadastrar'}</button>
                 </form>
-                <Link to={"/"}>
+                <Link to={"/"} style={{textDecoration: 'none'}}>
                     <h3>Já tem uma conta? Entre agora!</h3>
                 </Link>
             </Container>
@@ -90,6 +90,10 @@ const Container = styled.div`
     width: 100%;
     padding: 0 10px;
     margin-top: 25vh;
+    
+    header{
+        margin-bottom: 20px;
+    }
     
     h1{
         font-family: 'Saira Stencil One', cursive;

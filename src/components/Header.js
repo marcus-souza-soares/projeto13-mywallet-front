@@ -1,10 +1,11 @@
 import styled from "styled-components"
 
 
-export default function Header({txt}){
+export default function Header({txt, children}){
     return (
         <Container>
             <div className="titulo">{txt}</div>
+            {children}
         </Container>
     )
 }
