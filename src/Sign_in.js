@@ -1,12 +1,31 @@
 import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
 import styled from "styled-components";
+
+import Loading from "./components/Loading";
 
 export default function SigIn() {
     const navigate = useNavigate();
 
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [loading, setLoading] = useState(false)
+    const [desativado, setDesativado] = useState();
+
+
 
     const login = e => {
         e.preventDefault();
+        const validaEmail = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+/;
+        const validaSenha = /[0-9a-zA-Z$*&@#]{6,}/;
+
+        if (!validaEmail.test(email)) {
+            return alert('E-mail inválido!');
+        }
+        if (!validaSenha.test(password)) {
+            return alert('Senha inválida! Mínimo de 6 caracteres.');
+        }
+
         navigate('/wallet');
     }
 
@@ -17,9 +36,22 @@ export default function SigIn() {
                     <h1>MyWallet</h1>
                 </header>
                 <form onSubmit={login}>
-                    <input type="email" placeholder="E-mail" required/>
-                    <input type="password" placeholder="Senha" required/>
-                    <button>Entrar</button>
+                    <input
+                        type="email"
+                        placeholder="E-mail"
+                        onChange={(e) => setEmail(e.target.value)}
+                        value={email}
+                        disabled={desativado}
+                        required />
+
+                    <input
+                        type="password"
+                        placeholder="Senha"
+                        onChange={(e) => setPassword(e.target.value)}
+                        value={password}
+                        disabled={desativado}
+                        required />
+                    <button type="submit" disabled={desativado}>{loading ? <Loading></Loading> : 'Entrar'}</button>
                 </form>
                 <Link to={"/sign-up"}>
                     <h3>Primeira vez? Cadastre-se!</h3>
