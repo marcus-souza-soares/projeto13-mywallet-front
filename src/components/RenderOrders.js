@@ -1,14 +1,14 @@
 import styled from "styled-components";
 
 
-export default function RenderOrders({ orderList }) {
+export default function RenderOrders({ list }) {
     return (
         <Container>
-            {orderList.map(oder => {
+            {list.map((oder, index) => {
                 const { dia, descricao, type, valor } = oder;
                 let value = valor.toFixed(2)?.replace(".",",")
                 return (
-                    <Order type={type}>
+                    <Order type={type} key={index}>
                         <span>
                             <h2 className="dia">{dia}&nbsp;</h2>
                             <h2 className="descricao">{descricao}</h2>

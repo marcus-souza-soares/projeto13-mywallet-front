@@ -1,6 +1,9 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import styled from "styled-components";
+import axios from "axios";
+import { useContext } from "react";
+import OrderContext from "./contexts/OrderContext";
 
 import Loading from "./components/Loading";
 
@@ -11,6 +14,7 @@ export default function SigIn() {
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false)
     const [desativado, setDesativado] = useState();
+    const { setToken } = useContext(OrderContext);
 
 
 
@@ -25,8 +29,23 @@ export default function SigIn() {
         if (!validaSenha.test(password)) {
             return alert('Senha inválida! Mínimo de 6 caracteres.');
         }
-
-        navigate('/wallet');
+        const body = {
+            email, 
+            password
+        }
+        setDesativado(true);
+        setLoading(true);
+        const promise = axios.post("http://localhost:5000/login", body)
+        promise.then(res => {
+            console.log(res.data);
+            setToken(res.data.token);
+            navigate('/wallet');
+        });
+        promise.catch(e => {
+            setDesativado(false);
+            setLoading(false);
+            return console.log("Deu erro!");
+        })
     }
 
     return (
@@ -53,7 +72,7 @@ export default function SigIn() {
                         required />
                     <button type="submit" disabled={desativado}>{loading ? <Loading></Loading> : 'Entrar'}</button>
                 </form>
-                <Link to={"/sign-up"} style={{textDecoration: 'none'}}>
+                <Link to={"/sign-up"} style={{ textDecoration: 'none' }}>
                     <h3>Primeira vez? Cadastre-se!</h3>
                 </Link>
             </Container>

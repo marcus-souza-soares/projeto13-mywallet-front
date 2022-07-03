@@ -10,11 +10,12 @@ import GlobalStyle from './themes/globalStyles'
 
 export default function App() {
     const [release, setRelease] = useState({ type: 'Entrada' });
+    const [token, setToken] = useState();
     return (
         <>
             <BrowserRouter>
                 <GlobalStyle />
-                <ReleasesContext.Provider value={{ release, setRelease }} >
+                <ReleasesContext.Provider value={{ release, setRelease, token, setToken }} >
                     <Routes>
                         <Route exact path='/' element={<SignIn />} />
                         <Route exact path='/sign-up' element={<SignUp />} />

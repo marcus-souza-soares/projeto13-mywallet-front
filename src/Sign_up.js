@@ -1,6 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from 'react';
 import styled from "styled-components";
+import axios from 'axios';
 
 import Loading from "./components/Loading";
 
@@ -12,7 +13,7 @@ export default function SignUp() {
     const [password01, setPassword01] = useState('');
     const [password02, setPassword02] = useState('');
     const [loading, setLoading] = useState(false)
-    const [desativado, setDesativado] = useState();
+    const [desativado, setDesativado] = useState(false);
 
 
 
@@ -34,7 +35,24 @@ export default function SignUp() {
         if (password01 !== password02) {
             return alert("As senhas se diferem!")
         }
+        const body = {
+            name: nome,
+            email,
+            password: password01
+        }
 
+        setDesativado(true);
+        setLoading(true);
+
+        const promise = axios.post("http://localhost:5000/sign-up", body)
+        promise.then(res => {
+            console.log(res.data);
+        });
+        promise.catch(res => {
+            return console.log(res.data);
+        });
+        setLoading(false);
+        setDesativado(false);
         navigate('/');
     }
 
@@ -75,7 +93,7 @@ export default function SignUp() {
                         required />
                     <button type="submit" disabled={desativado}>{loading ? <Loading></Loading> : 'Cadastrar'}</button>
                 </form>
-                <Link to={"/"} style={{textDecoration: 'none'}}>
+                <Link to={"/"} style={{ textDecoration: 'none' }}>
                     <h3>Já tem uma conta? Entre agora!</h3>
                 </Link>
             </Container>
