@@ -6,42 +6,24 @@ import RenderOrders from "./components/RenderOrders";
 import OrderContext from "./contexts/OrderContext";
 import axios from 'axios';
 import { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
 
 export default function Wallet() {
+    const navigate = useNavigate();
     const { token } = useContext(OrderContext);
     const [orderlist, setOrderlist] = useState([]);
     const [name, setName] = useState("");
-    // const orderList = [
-    //     {
-    //         dia: "30/11",
-    //         descricao: "Almoço mãe",
-    //         type: "Saída",
-    //         valor: 39.90
-    //     },
-    //     {
-    //         dia: "30/11",
-    //         descricao: "Almoço mãe",
-    //         type: "Entrada",
-    //         valor: 39.90
-    //     },
-    //     {
-    //         dia: "30/11",
-    //         descricao: "Almoço mãe",
-    //         type: "Saída",
-    //         valor: 39.90
-    //     }
-    // ]
-    
-    useEffect(()=>{
-        console.log(token)
+
+    useEffect(() => {
 
         const permission = {
             headers: {
-              "Authorization": `Bearer ${token}`
+                "Authorization": `Bearer ${token}`
             }
-          }
+        }
+        console.log(permission)
 
-        const promise = axios.get("http://localhost:5000/wallet" ,permission);
+        const promise = axios.get("http://192.168.0.133:5000/wallet", permission);
         promise.then(res => {
             console.log(res.data);
             setOrderlist(res.data.lista);
@@ -49,22 +31,42 @@ export default function Wallet() {
         });
         promise.catch(() => {
             console.log("Não foi possível buscar as ordens!")
-        })      
-        
-    },[token])
-    console.log(orderlist)
+        })
+
+    }, [token])
+    console.log(orderlist);
+
+    const logout = () => {
+        const permission = {
+            headers: {
+                "Authorization": `Bearer ${token}`
+            }
+        }
+        const promise = axios.delete('http://192.168.0.133:5000/logout', permission)
+        promise.then(res => {
+            alert(res.data);
+            navigate("/");
+        })
+        promise.catch(e => {
+            console.log("Erro")
+        })
+    }
 
     return (
         <Container>
-            <Header txt={`Olá, ${name}`}>
-                <ion-icon name="log-out-outline"></ion-icon>
+            <Header txt={`Olá, ${name}`} >
+                <ion-icon onClick={logout} name="log-out-outline"></ion-icon>
             </Header>
             <Releases list={orderlist}>
-                {orderlist.length > 0 ? <RenderOrders list={orderlist}/>: <h1>Não há registros de entrada ou saída</h1>}
+                {orderlist.length > 0 ? <RenderOrders list={orderlist} setOrderlist={setOrderlist}/> : <h1>Não há registros de entrada ou saída</h1>}
             </Releases>
             <div className="buttons">
-                <Button ionicon={"add-circle-outline"} text={"Entrada"} />
-                <Button ionicon={"remove-circle-outline"} text={"Saída"} />
+                <Link to="/wallet/entrada" style={{ textDecoration: 'none' }}>
+                    <Button ionicon={"add-circle-outline"} text={"Entrada"} />
+                </Link>
+                <Link to="/wallet/saida" style={{ textDecoration: 'none' }}>
+                    <Button ionicon={"remove-circle-outline"} text={"Saída"} />
+                </Link>
             </div>
         </Container>
     )
@@ -75,11 +77,13 @@ const Container = styled.div`
     width: 100%;
     padding: 20px 20px;
 
-    .buttons{
+    .buttons {
         display: flex;
         width: 100%;
         justify-content: space-between;
     }
+    
+    
     ion-icon{
         color: #FFFFFF;
         width: 24px;
@@ -88,13 +92,14 @@ const Container = styled.div`
 `
 
 const Releases = styled.div`
+    position: relative;
     background: #FFFFFF;
     border-radius: 5px;
     width: 100%;
     min-height: 65vh;
     display: flex;
-    justify-content: ${props => props.list.length > 0 ? 'flex-start' : 'center' };
-    align-items: ${props => props.list.length > 0 ? 'flex-start' : 'center' };
+    justify-content: ${props => props.list.length > 0 ? 'flex-start' : 'center'};
+    align-items: ${props => props.list.length > 0 ? 'flex-start' : 'center'};
     h1{
         width: 180px;
         height: 46px;

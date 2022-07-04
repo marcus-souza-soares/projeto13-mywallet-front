@@ -44,16 +44,18 @@ export default function SignUp() {
         setDesativado(true);
         setLoading(true);
 
-        const promise = axios.post("http://localhost:5000/sign-up", body)
+        const promise = axios.post("http://192.168.0.133:5000/sign-up", body)
         promise.then(res => {
             console.log(res.data);
+            setLoading(false);
+            setDesativado(false);
+            navigate('/');
         });
         promise.catch(res => {
-            return console.log(res.data);
+            console.log(res.data);
+            setLoading(false);
+            setDesativado(false);
         });
-        setLoading(false);
-        setDesativado(false);
-        navigate('/');
     }
 
     return (

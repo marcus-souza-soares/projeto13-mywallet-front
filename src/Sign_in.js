@@ -35,16 +35,17 @@ export default function SigIn() {
         }
         setDesativado(true);
         setLoading(true);
-        const promise = axios.post("http://localhost:5000/login", body)
-        promise.then(res => {
+        const promise = axios.post("http://192.168.0.133:5000/login", body)
+        promise.then(async res => {
             console.log(res.data);
-            setToken(res.data.token);
+            setToken(res.data.token)
             navigate('/wallet');
         });
         promise.catch(e => {
             setDesativado(false);
             setLoading(false);
-            return console.log("Deu erro!");
+            alert("Ops! Não conseguimos encontrar seu cadastro...");
+            navigate("/sign-up");
         })
     }
 

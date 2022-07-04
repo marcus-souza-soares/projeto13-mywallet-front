@@ -1,18 +1,9 @@
 import styled from "styled-components";
-import { useContext } from "react";
-import ReleasesContext from "../contexts/OrderContext.js";
-import { useNavigate } from "react-router-dom";
 
 export default function Buttons({ ionicon, text }) {
-    const { setRelease } = useContext(ReleasesContext);
-    const navigate = useNavigate();
 
-    const newRelease = () => {
-        setRelease({ type: text });
-        navigate('/release');
-    }
     return (
-        <Container onClick={newRelease}>
+        <Container >
             <ion-icon name={ionicon}></ion-icon>
             <span>
                 <h3 className="static">Nova</h3>
@@ -24,10 +15,8 @@ export default function Buttons({ ionicon, text }) {
 
 const Container = styled.div`
     margin-top: 20px;
-    width: 48%;
+    width: 20vh;
     height: 114px;
-    left: 25px;
-    top: 537px;
 
     background: #A328D6;
     border-radius: 5px;
