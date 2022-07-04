@@ -25,7 +25,7 @@ export default function Entrada() {
         console.log(body)
         console.log(token)
 
-        const promise = axios.post("http://https://marcus-mywallet.herokuapp.com/wallet", {
+        const promise = axios.post("https://marcus-mywallet.herokuapp.com/wallet", {
             valor: Number(valor),
             type: "entrada",
             descricao

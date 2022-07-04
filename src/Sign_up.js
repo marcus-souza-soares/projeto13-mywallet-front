@@ -44,7 +44,7 @@ export default function SignUp() {
         setDesativado(true);
         setLoading(true);
 
-        const promise = axios.post("http://https://marcus-mywallet.herokuapp.com/sign-up", body)
+        const promise = axios.post("https://marcus-mywallet.herokuapp.com/sign-up", body)
         promise.then(res => {
             console.log(res.data);
             setLoading(false);

@@ -22,7 +22,7 @@ export default function RenderOrders({ list, setOrderlist }) {
         const value = valor.toFixed(2)?.replace(".", ",");
 
         const deleteOrder = ({ setOrderlist }) => {
-            const promise = axios.delete(`http://https://marcus-mywallet.herokuapp.com/wallet/delete`, {...order})
+            const promise = axios.delete(`https://marcus-mywallet.herokuapp.com/wallet/delete`, {...order})
             promise.then(res => {
                 console.log("Deletou");
                 console.log(res.data)
