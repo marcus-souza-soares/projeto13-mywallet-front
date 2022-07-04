@@ -23,7 +23,7 @@ export default function Wallet() {
         }
         console.log(permission)
 
-        const promise = axios.get("http://192.168.0.133:5000/wallet", permission);
+        const promise = axios.get("http://https://marcus-mywallet.herokuapp.com/wallet", permission);
         promise.then(res => {
             console.log(res.data);
             setOrderlist(res.data.lista);
@@ -42,7 +42,7 @@ export default function Wallet() {
                 "Authorization": `Bearer ${token}`
             }
         }
-        const promise = axios.delete('http://192.168.0.133:5000/logout', permission)
+        const promise = axios.delete('http://https://marcus-mywallet.herokuapp.com/logout', permission)
         promise.then(res => {
             alert(res.data);
             navigate("/");

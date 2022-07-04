@@ -35,7 +35,7 @@ export default function SigIn() {
         }
         setDesativado(true);
         setLoading(true);
-        const promise = axios.post("http://192.168.0.133:5000/login", body)
+        const promise = axios.post("http://https://marcus-mywallet.herokuapp.com/login", body)
         promise.then(async res => {
             console.log(res.data);
             setToken(res.data.token)
