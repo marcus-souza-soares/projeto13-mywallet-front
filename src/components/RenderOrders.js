@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import axios from "axios";
-import { useState } from "react";
+// import { useState } from "react";
+// import { useNavigate } from "react-router-dom";
 
 export default function RenderOrders({ list, setOrderlist }) {
     
@@ -17,16 +18,14 @@ export default function RenderOrders({ list, setOrderlist }) {
     }
 
     function Order({ order }) {
-        
-        const { dia, descricao, type, valor, _id, userId } = order;
+        const { dia, descricao, type, valor } = order;
         const value = valor.toFixed(2)?.replace(".", ",");
 
         const deleteOrder = ({ setOrderlist }) => {
-            const body = { _id, userId };
-            const promise = axios.delete("http://192.168.0.133:5000/wallet", body)
+            const promise = axios.delete(`http://192.168.0.133:5000/wallet/delete`, {...order})
             promise.then(res => {
-                setOrderlist(res.data);
                 console.log("Deletou");
+                console.log(res.data)
             })
             promise.catch(() => {
                 console.log("Não deletou. Erro")
