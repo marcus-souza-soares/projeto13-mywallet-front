@@ -52,7 +52,7 @@ export default function RenderOrders({ list, setOrderlist }) {
         <Container saldo={saldo}>
             <div className="orders">
             {list.map((order, index) => {
-                return <Order key={index} order={order} setOrderlist={() => setOrderlist()} />
+                return <Order key={index} order={order} setOrderlist={setOrderlist} />
             })}
             </div>
             <div className="saldo" >
